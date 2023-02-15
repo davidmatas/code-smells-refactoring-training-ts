@@ -2,13 +2,13 @@ import fs from "fs";
 import {Employee} from "./Employee";
 
 export interface EmployeeRepository {
-    getEmployees(): Array<Employee>;
+    getAll(): Array<Employee>;
 }
 
 export class EmployeeFileRepository implements EmployeeRepository {
     constructor(private filename: string) {}
 
-    getEmployees(): Array<Employee> {
+    getAll(): Array<Employee> {
         const data = fs.readFileSync(this.filename, {encoding: 'utf8'});
         const employees: Array<Employee> = [];
         data.split(/\r?\n/).forEach((str: string) => {

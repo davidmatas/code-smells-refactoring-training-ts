@@ -1,7 +1,11 @@
 import fs from "fs";
 import {Employee} from "./Employee";
 
-export class EmployeeFileRepository {
+export interface EmployeeRepository {
+    getEmployees(): Array<Employee>;
+}
+
+export class EmployeeFileRepository implements EmployeeRepository {
     constructor(private filename: string) {}
 
     getEmployees(): Array<Employee> {

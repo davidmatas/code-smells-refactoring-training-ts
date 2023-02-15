@@ -9,10 +9,15 @@ export class BirthdayService {
 
     public sendGreetings(fileName: string, ourDate: OurDate, smtpHost: string, smtpPort: number) {
         const data = fs.readFileSync(fileName, {encoding: 'utf8'});
+        const employees: Array<Employee> = [];
         data.split(/\r?\n/).forEach((str: string) => {
             let employeeData = str.split(", ");
             const employee = new Employee(employeeData[1], employeeData[0],
                 employeeData[2], employeeData[3]);
+            employees.push(employee);
+        });
+
+        employees.forEach(employee => {
             if (employee.isBirthday(ourDate)) {
                 const recipient = employee.getEmail();
                 const body = "Happy Birthday, dear %NAME%!".replace("%NAME%",
@@ -21,8 +26,7 @@ export class BirthdayService {
                 this.sendTheMessage(smtpHost, smtpPort, "sender@here.com", subject,
                     body, recipient);
             }
-        });
-
+        })
 
     }
 

@@ -1,9 +1,11 @@
 import fs from "fs";
 import {Employee} from "./Employee";
 
-export class EmployeeRepository {
-    getEmployees(fileName: string): Array<Employee> {
-        const data = fs.readFileSync(fileName, {encoding: 'utf8'});
+export class EmployeeFileRepository {
+    constructor(private filename: string) {}
+
+    getEmployees(): Array<Employee> {
+        const data = fs.readFileSync(this.filename, {encoding: 'utf8'});
         const employees: Array<Employee> = [];
         data.split(/\r?\n/).forEach((str: string) => {
             let employeeData = str.split(", ");

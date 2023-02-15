@@ -1,16 +1,11 @@
 import {OurDate} from "./OurDate";
 import nodemailer, {Transporter} from "nodemailer";
 import {MailOptions} from "nodemailer/lib/smtp-transport";
-import {EmployeeRepository} from "./EmployeeRepository";
+import {EmployeeFileRepository} from "./EmployeeFileRepository";
 
 export class BirthdayService {
-    private employeesRepository: EmployeeRepository;
-    constructor() {
-        this.employeesRepository = new EmployeeRepository()
-    }
-
     public sendGreetings(fileName: string, ourDate: OurDate, smtpHost: string, smtpPort: number) {
-        const employees = this.employeesRepository.getEmployees(fileName);
+        const employees = new EmployeeFileRepository(fileName).getEmployees();
 
         employees.forEach(employee => {
             if (employee.isBirthday(ourDate)) {

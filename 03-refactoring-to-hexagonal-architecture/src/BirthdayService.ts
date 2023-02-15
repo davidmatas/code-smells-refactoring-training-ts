@@ -1,21 +1,16 @@
 import {OurDate} from "./OurDate";
-import {Employee} from "./Employee";
-import * as fs from "fs";
-import {Transporter} from "nodemailer";
-import nodemailer from "nodemailer";
+import nodemailer, {Transporter} from "nodemailer";
 import {MailOptions} from "nodemailer/lib/smtp-transport";
+import {EmployeeRepository} from "./EmployeeRepository";
 
 export class BirthdayService {
+    private employeesRepository: EmployeeRepository;
+    constructor() {
+        this.employeesRepository = new EmployeeRepository()
+    }
 
     public sendGreetings(fileName: string, ourDate: OurDate, smtpHost: string, smtpPort: number) {
-        const data = fs.readFileSync(fileName, {encoding: 'utf8'});
-        const employees: Array<Employee> = [];
-        data.split(/\r?\n/).forEach((str: string) => {
-            let employeeData = str.split(", ");
-            const employee = new Employee(employeeData[1], employeeData[0],
-                employeeData[2], employeeData[3]);
-            employees.push(employee);
-        });
+        const employees = this.employeesRepository.getEmployees(fileName);
 
         employees.forEach(employee => {
             if (employee.isBirthday(ourDate)) {
@@ -29,7 +24,6 @@ export class BirthdayService {
         })
 
     }
-
     private sendTheMessage(smtpHost: string, smtpPort: number, sender: string,
                            subject: string, body: string, recipient: string) {
         // Create a mail session

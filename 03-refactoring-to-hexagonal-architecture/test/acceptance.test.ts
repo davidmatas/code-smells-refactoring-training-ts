@@ -2,7 +2,7 @@ import {BirthdayService} from "../src/BirthdayService";
 import {OurDate} from "../src/OurDate";
 import {Transporter} from "nodemailer";
 import {MailOptions} from "nodemailer/lib/smtp-transport";
-import {EmployeeFileRepository, EmployeeRepository} from "../src/EmployeeFileRepository";
+import {FileEmployeeRepository, EmployeeRepository} from "../src/FileEmployeeRepository";
 
 describe('Acceptance', () => {
 
@@ -14,7 +14,7 @@ describe('Acceptance', () => {
 
     beforeEach(() => {
         messagesSent = new Array<MailOptions>();
-        employeeRepository = new EmployeeFileRepository(fileName);
+        employeeRepository = new FileEmployeeRepository(fileName);
 
         service = new class extends BirthdayService {
             protected sendMessage(msg: MailOptions, transport: Transporter) {

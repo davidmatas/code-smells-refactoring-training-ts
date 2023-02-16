@@ -1,0 +1,3 @@
+last_name, first_name, date_of_birth, email
+Doe, John, Invalid Date, john.doe@foobar.com
+Ann, Mary, Invalid Date, mary.ann@foobar.com

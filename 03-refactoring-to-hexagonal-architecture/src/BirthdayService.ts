@@ -1,7 +1,7 @@
 import {OurDate} from "./OurDate";
 import nodemailer, {Transporter} from "nodemailer";
 import {MailOptions} from "nodemailer/lib/smtp-transport";
-import {EmployeeFileRepository, EmployeeRepository} from "./EmployeeFileRepository";
+import {FileEmployeeRepository, EmployeeRepository} from "./FileEmployeeRepository";
 import {Employee} from "./Employee";
 
 export class BirthdayService {
@@ -56,7 +56,7 @@ export class BirthdayService {
     }
 
     public main(args: string) {
-        const employeeRepository = new EmployeeFileRepository("employee_data.txt");
+        const employeeRepository = new FileEmployeeRepository("employee_data.txt");
         const service = new BirthdayService(employeeRepository);
         try {
             service.sendGreetings(new OurDate("2008/10/08"), "localhost", 25);

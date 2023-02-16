@@ -2,12 +2,8 @@ export class OurDate {
 
     private date: Date;
 
-    constructor(yyyyMMdd: string) {
-        const [year, month, day] = yyyyMMdd.split("/");
-        this.date = new Date(Number(year), Number(month) -1, Number(day));
-        if (this.date.toString() === 'Invalid Date') {
-            throw new Error("ParseException");
-        }
+    constructor(date: Date) {
+        this.date = date;
     }
 
     public getDay(): number {

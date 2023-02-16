@@ -59,7 +59,7 @@ export class BirthdayService {
         const employeeRepository = new FileEmployeeRepository("employee_data.txt");
         const service = new BirthdayService(employeeRepository);
         try {
-            service.sendGreetings(new OurDate("2008/10/08"), "localhost", 25);
+            service.sendGreetings(new OurDate(new Date("2008/10/08")), "localhost", 25);
         } catch (e) {
             console.log(e);
         }

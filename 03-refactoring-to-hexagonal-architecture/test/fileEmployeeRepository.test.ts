@@ -1,5 +1,5 @@
 import {FileEmployeeRepository} from "../src/FileEmployeeRepository";
-import {OurDate} from "../src/OurDate";
+import {DateRepresentation} from "./DateRepresentation";
 
 describe('FileEmployeeRepository', () => {
     it('returns employees with the birhtday date', () => {
@@ -7,7 +7,7 @@ describe('FileEmployeeRepository', () => {
         const employeeRepository = new FileEmployeeRepository(filename);
         const employees = employeeRepository.getAll();
         const employee = employees[0];
-        const givenBirthday = new OurDate('1982/10/08');
+        const givenBirthday = DateRepresentation.toOurDate('1982/10/08');
 
         expect(employee.isBirthday(givenBirthday)).toBe(true);
     });

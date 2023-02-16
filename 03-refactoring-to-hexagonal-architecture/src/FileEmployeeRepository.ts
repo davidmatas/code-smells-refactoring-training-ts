@@ -1,5 +1,6 @@
 import fs from "fs";
 import {Employee} from "./Employee";
+import {OurDate} from "./OurDate";
 
 export interface EmployeeRepository {
     getAll(): Array<Employee>;
@@ -13,12 +14,22 @@ export class FileEmployeeRepository implements EmployeeRepository {
         const employees: Array<Employee> = [];
 
         data.split(/\r?\n/).slice(1).forEach((str: string) => {
-            let employeeData = str.split(", ");
-            const employee = new Employee(employeeData[1], employeeData[0],
-                employeeData[2], employeeData[3]);
+            let [lastname, firstname, dateStr, email ] = str.split(", ");
+            const birthDate = this.parseDate(dateStr);
+            const employee = new Employee(firstname, lastname,
+                birthDate, email);
             employees.push(employee);
         });
 
         return employees;
+    }
+
+    private parseDate(yyyyMMdd: string): OurDate {
+        const [year, month, day] = yyyyMMdd.split("/");
+        const date = new Date(Number(year), Number(month) - 1, Number(day));
+        if (date.toString() === 'Invalid Date') {
+            throw new Error("ParseException");
+        }
+        return new OurDate(date);
     }
 }
